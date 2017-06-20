@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/index.css"/>
+        <script src="/static/js/lib/jquery.min.js"></script>
+        <script src="/static/js/lib/underscore.min.js"></script>
+        <!--<script src="/static/js/lib/pixi.min.js"></script>-->
+        <!--<script src="/static/js/common/processing.min.js"></script>-->
+
+        <script src="/static/js/lib/patterns.js"></script>
+
+        <!--<script src="/static/js/marbles/models.js"></script>-->
+        <!--<script src="/static/js/marbles/views.js"></script>-->
+        <script src="/static/js/cyclic_art.js"></script>
+        <title>cyclic_art</title>
+    </head>
+    <body>
+        <canvas id="art-canvas" width=400 height=400></canvas>
+        <canvas id="img-canvas" width=400 height=400></canvas>
+        <img id="image" src="/static/img/wave.jpg" height="400"/>
+        <!--<form>-->
+        <!--    <input id=file type=file name="files[]" onchange="updateImage(this);"/>-->
+        <!--</form>-->
+        <ul>
+            <li>
+                <input id="x-checkbox" type="checkbox" />
+                <label id="x-checkbox-label">X</label>
+            </li>
+            <li>
+                <input id="y-checkbox" type="checkbox" />
+                <label id="y-checkbox-label">Y</label>
+            </li>
+            <li>
+                <input id="radius-checkbox" type="checkbox" />
+                <label id="radius-checkbox-label">Radius</label>
+            </li>
+            <li>
+                <input id="colors-checkbox" type="checkbox" />
+                <label id="colors-checkbox-label">Colors</label>
+            </li>
+            <li>
+                <input id="skip-range" type="range" min="0" max="45"/>
+                <label id="skip-range-label">Skip </label>
+            </li>
+        </ul>
+    </body>
+</html>

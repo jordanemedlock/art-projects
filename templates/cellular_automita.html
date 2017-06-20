@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/index.css"/>
+        <script src="/static/js/lib/jquery.min.js"></script>
+        <script src="/static/js/lib/underscore.min.js"></script>
+        <script src="/static/js/lib/gif.js"></script>
+        <!--<script src="/static/js/lib/pixi.min.js"></script>-->
+        <!--<script src="/static/js/common/processing.min.js"></script>-->
+
+        <script src="/static/js/lib/patterns.js"></script>
+
+        <!--<script src="/static/js/marbles/models.js"></script>-->
+        <!--<script src="/static/js/marbles/views.js"></script>-->
+        <script src="/static/js/cellular_automita.js"></script>
+        <title>cellular_automita</title>
+    </head>
+    <body>
+        <canvas id="art-canvas" width=400 height=400></canvas>
+        <img id="gif-holder" width=400 height=400 />
+        <table>
+            <tr>
+                <td>
+                    <input id="play-checkbox" class="change" type="checkbox" />
+                    <label id="">Play</label>
+                </td>
+                <td>
+                    <input id="init-button" type="button" value="Init"/>
+                    <input id="render-button" type="button" value="Render"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label id="">Transition Function: </label>
+                </td>
+                <td>
+                    <textarea id="transition-function"  class="change indent" rows=10 cols=80>
+(function(me, neighbors) {
+    return _.chain(neighbors)
+            .filter((x, i) => i % 2 == 1)
+            .reduce((acc, x) => acc + x)
+            .value() - 4 * me
+})
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label id="">Initialization Function: </label>
+                </td>
+                <td>
+                    <textarea id="initialization-function"  class="change indent" rows=1 cols=80>
+(function (x, y) { return 200 - Math.sqrt((x-25)*(x-25) + (y-25)*(y-25)) })
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label id="">Edge Function: </label>
+                </td>
+                <td>
+                    <textarea id="edge-function"  class="change indent" rows=1 cols=80>
+(function (x, y) { return 0 })
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label id="">Value To Color Function: </label>
+                </td>
+                <td>
+                    <textarea id="value-to-color-function"  class="change indent" rows=1 cols=80>
+(i => 'rgb(' + i + ',' + i + ',' + i + ')')
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+        <select id="save-select">
+
+        </select>
+        <button onclick="load()">Load</button>
+        <input type="text" id="save-name" placeholder="save name"/>
+        <button onclick="save()">Save</button>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+

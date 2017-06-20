@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/index.css"/>
+        <script src="/static/js/lib/jquery.min.js"></script>
+        <script src="/static/js/lib/underscore.min.js"></script>
+        <!--<script src="/static/js/lib/pixi.min.js"></script>-->
+        <!--<script src="/static/js/common/processing.min.js"></script>-->
+
+        <script src="/static/js/lib/patterns.js"></script>
+
+        <!--<script src="/static/js/marbles/models.js"></script>-->
+        <!--<script src="/static/js/marbles/views.js"></script>-->
+        <script src="/static/js/kaleidoscope.js"></script>
+        <title>kaleidoscope</title>
+    </head>
+    <body>
+        <canvas id="canvas1" width=400 height=400></canvas>
+        <canvas id="canvas2" width=400 height=400></canvas>
+        <img id="image" src="/static/img/mandelbrot.png" height=400/>
+        <form>
+            <input id=file type=file name="files[]" onchange="updateImage(this);"/>
+        </form>
+        <ul>
+            <li>
+                <input id="x-range" type="range" min=0 max=400 step=5 value=200 />
+                <label id="x-range-label">X: </label>
+            </li>
+            <li>
+                <input id="y-range" type="range" min=0 max=400 step=5 value=200 />
+                <label id="y-range-label">Y: </label>
+            </li>
+            <li>
+                <input id="r-range" type="range" min=0 max=200 step=5 value=100 />
+                <label id="r-range-label">R: </label>
+            </li>
+            <li>
+                <input id="th-range" type="range" min=0 max=360 step=10 value=0 />
+                <label id="th-range-label">TH: </label>
+            </li>
+        </ul>
+    </body>
+</html>

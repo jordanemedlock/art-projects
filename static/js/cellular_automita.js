@@ -7,7 +7,8 @@ var Grid = function(width, height) {
     this.tiles = new Array(width*height)
     this.getTile = function(x, y) {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
-            return inputs.edge(x, y)
+            var edge = inputs.edge(this, x, y)
+            return edge
         }
         return this.tiles[y * this.width + x]
     }
@@ -19,7 +20,8 @@ var Grid = function(width, height) {
         var tileHeight = canvas.height / this.height
         for (var y=0; y < this.height; y++) {
             for (var x=0; x < this.width; x++) {
-                context.fillStyle = this.valueToColor(this.getTile(x, y))
+                var tile = this.getTile(x, y)
+                context.fillStyle = this.valueToColor(tile)
                 context.fillRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight)
             }
         }
@@ -60,7 +62,7 @@ var Grid = function(width, height) {
     this.initialize = function(func) {
         for (var y=0; y < this.height; y++) {
             for (var x=0; x < this.width; x++) {
-                this.setTile(x, y, func(x, y))
+                this.setTile(x, y, func(this, x, y))
             }
         }
     }
@@ -73,6 +75,7 @@ var getInputs = function() {
     inputs.saveName = $('#save-name').val()
     inputs.edgeString = $('#edge-function').val()
     inputs.edge = eval(inputs.edgeString)
+    inputs.size = parseInt($('#size-number').val())
     inputs.transitionString = $('#transition-function').val()
     inputs.transition = eval(inputs.transitionString)
     inputs.initializationString = $('#initialization-function').val()
@@ -88,6 +91,7 @@ var setInputs = function(ins) {
     $('#save-name').val(inputs.saveName)
     $('#edge-function').val(inputs.edgeString)
     inputs.edge = eval(inputs.edgeString)
+    $('#size-number').val(inputs.size)
     $('#transition-function').val(inputs.transitionString)
     inputs.transition = eval(inputs.transitionString)
     $('#initialization-function').val(inputs.initializationString)
@@ -145,10 +149,13 @@ $(function() {
         gif.on('progress', function(progress) {
             console.log('gif progress:', progress);
         });
-        grid = new Grid(50,50)
+        grid = new Grid(inputs.size, inputs.size)
         grid.initialize(inputs.initialization)
         grid.drawGrid(canvas, context)
-        gif.addFrame(canvas, {copy: true})
+        gif.addFrame(canvas, {
+            copy: true,
+            delay: 5
+        })
     }
 
     var draw = function(delta) {
@@ -157,7 +164,10 @@ $(function() {
                 grid = grid.transition(inputs.transition)
             })
             grid.drawGrid(canvas, context)
-            gif.addFrame(canvas, {copy: true})
+            gif.addFrame(canvas, {
+                copy: true,
+                delay: 5
+            })
         }
     }
 

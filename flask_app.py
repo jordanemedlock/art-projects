@@ -26,3 +26,7 @@ def epicycles():
 def cellular_automita():
     return render_template('cellular_automita.html')
 
+@app.route('/dimensions')
+def dimensions():
+    return render_template('dimensions.html')
+

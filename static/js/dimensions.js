@@ -17,7 +17,7 @@ $(function() {
         this.tick = 0
         this.width = 50
         this.height = 50
-        this.padding = 10
+        this.padding = 50
         this.end = [
             {
                 points: [{x: this.padding, y: this.padding}],
@@ -52,23 +52,62 @@ $(function() {
                     end[0].points[2].y += this.height
                     end[0].points[3].y += this.height
                 }
-            }//,
-            // { // load d2
-            //     time: 30,
-            //     end: (end) => {
-            //         end[1] = end[0]
-            //         end[1].points[0
-            //     }
-            // },
-            // { // d2 -> d3.x
-            //     time: 30,
-            //     end: [
-            //         {x: this.padding, y: this.padding},
-            //         {x: this.padding + this.width, y: this.padding},
-            //         {x: this.padding + this.width, y: this.padding + this.height},
-            //         {x: this.padding, y: this.padding + this.height}
-            //     ]
-            // }
+            },
+            { // load d2
+                time: 30,
+                end: (end) => {
+                    end[1] = {
+                        points: [
+                            end[0].points[3],
+                            end[0].points[2],
+                            end[0].points[2],
+                            end[0].points[3],
+                        ],
+                        fill: 'green',
+                        stroke: 'black'
+                    }
+                }
+            },
+            { // d2 -> d3.x
+                time: 30,
+                end: (end) => {
+                    end[0].points[2].x += 0
+                    end[0].points[2].y -= 10
+                    end[0].points[3].x -= 10
+                    end[0].points[3].y -= 10
+
+                    end[1].points[0] = end[0].points[3]
+                    end[1].points[1] = end[0].points[2]
+                    end[1].points[2].y += 30
+                    end[1].points[3].y += 30
+                }
+            },
+            {
+                time: 1,
+                end: (end) => {
+                    end[2] = {
+                        points: [
+                            end[0].points[1],
+                            end[1].points[1],
+                            end[1].points[2],
+                            end[1].points[1]
+                        ],
+                        fill: 'blue',
+                        stroke: 'black'
+                    }
+                }
+            },
+            {
+                time: 30,
+                end: (end) => {
+                    end[0].points[2].x -= 15
+                    end[1].points[1].x -= 15
+                    end[2].points[1].x -= 15
+
+                    end[2].points[3].x += 15
+                    end[2].points[3].y += 5
+                }
+            }
         ]
     }
 
@@ -91,12 +130,13 @@ $(function() {
 
     data.update = function() {
         var tick = this.tick
-        _.find(this.states, (state) => {
+        _.find(this.states, (state, i) => {
             if (tick == 0) {
                 this.start = this.end
-                this.end = $.extend(true, {}, this.start)
-                this.polys = this.end
+                this.end = $.extend(true, [], this.start)
+                this.polys = null
                 state.end(this.end)
+                this.transition(0)
                 return true
             } else if (tick < state.time) {
                 var delta = tick * (1 / state.time)

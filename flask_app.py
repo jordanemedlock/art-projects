@@ -30,3 +30,8 @@ def cellular_automita():
 def dimensions():
     return render_template('dimensions.html')
 
+
+@app.route('/block_game')
+def dimensions():
+    return render_template('block_game.html')
+
